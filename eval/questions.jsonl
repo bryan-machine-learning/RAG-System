@@ -4,10 +4,41 @@
 {"question": "How well do LLMs answer complex questions directly, and what accuracy figures are reported?", "gold": [{"source": "2309.01431v2.pdf", "page": 6}], "answerable": true}
 {"question": "What is hallucination in LLMs?", "gold": [{"source": "2504.08748v1.pdf", "page": 2}], "answerable": true}
 {"question": "What two new metrics does the RAGGED paper introduce?", "gold": [{"source": "2403.09040v3.pdf", "page": 1}], "answerable": true}
-{"question": "Who first proposed retrieval-augmented generation?", "gold": [{"source": "2501.11929v1.pdf", "page": 1}, {"source": "2601.16503v2.pdf", "page": 2}], "answerable": true}
 {"question": "How much does adding a reranker change F1 on NQ compared with vanilla RAG using Llama3.1-8B?", "gold": [{"source": "2502.11371v3.pdf", "page": 16}], "answerable": true}
-{"question": "Which pipeline configurations (baseline, GROBID, fine-tuning, semantic chunking) are compared in the fine-tuned model experiment?", "gold": [{"source": "2412.15404v1.pdf", "page": 18}], "answerable": true}
-{"question": "What problems of noisy input and item ambiguity does ReGeS address?", "gold": [{"source": "2509.21371v1.pdf", "page": 2}], "answerable": true}
 {"question": "What is the capital of France?", "gold": [], "answerable": false}
 {"question": "Who won the 2022 FIFA World Cup?", "gold": [], "answerable": false}
 {"question": "What is a good recipe for nasi lemak?", "gold": [], "answerable": false}
+{"question": "How many question-answering pairs are present in the MovieChat dataset?", "gold": [{"source": "2504.08748v1.pdf", "page": 42}], "answerable": true}
+{"question": "Can a two-stage reinforcement fine-tuning framework improve the explainability of multi-modal large models?", "gold": [{"source": "2512.17194v1.pdf", "page": 2}], "answerable": true}
+{"question": "Does fine-tuning model M lead to the most notable performance improvements in SAM-RAG, especially for multimodal tasks?", "gold": [{"source": "2410.11321v1.pdf", "page": 7}], "answerable": true}
+{"question": "Does a stronger retriever always improve reader performance?", "gold": [{"source": "2403.09040v3.pdf", "page": 8}], "answerable": true}
+{"question": "Can existing evaluation benchmarks effectively capture the full spectrum of real-world applications for planning mechanisms?", "gold": [{"source": "2504.08748v1.pdf", "page": 48}], "answerable": true}
+{"question": "Does the MultiHopAgent's retrieval process involve generating new queries based on search results?", "gold": [{"source": "2509.21336v1.pdf", "page": 7}], "answerable": true}
+{"question": "What are the average performance scores for the Community-GraphRAG (Local) and Community-GraphRAG (Global) models?", "gold": [{"source": "2502.11371v3.pdf", "page": 8}], "answerable": true}
+{"question": "Does SYNCHECK improve the faithfulness of RALMs in long-form generation?", "gold": [{"source": "2406.13692v2.pdf", "page": 9}], "answerable": true}
+{"question": "What approach is used to handle unbalanced data distributions in information extraction?", "gold": [{"source": "2406.03790v2.pdf", "page": 12}], "answerable": true}
+{"question": "Does the DSRAG framework improve response accuracy in domain-specific tasks compared to traditional baselines?", "gold": [{"source": "2509.10467v1.pdf", "page": 11}], "answerable": true}
+{"question": "What is the weighted precision for the \"selector-agent-trim\" model on the \"ncsu-las\" task?", "gold": [{"source": "2603.09891v1.pdf", "page": 18}], "answerable": true}
+{"question": "Does the expert model serve as a benchmark for evaluating the consistency and correctness of answers in the system?", "gold": [{"source": "2402.11626v1.pdf", "page": 10}], "answerable": true}
+{"question": "Can the end-to-end trained retriever be effectively adapted to varying sizes of training datasets?", "gold": [{"source": "2406.03790v2.pdf", "page": 10}], "answerable": true}
+{"question": "Does the RAG model typically produce more accurate summaries than the GraphRAG model under reference-based metrics?", "gold": [{"source": "2502.11371v3.pdf", "page": 7}], "answerable": true}
+{"question": "Does the ranking loss Lrank preserve the group-relative preferences induced by the stochastic labeling scheme?", "gold": [{"source": "2602.18734v2.pdf", "page": 4}], "answerable": true}
+{"question": "Does the proposed method aim to address the issue of overfitting to context quality by adapting an already trained FiD model to a new environment?", "gold": [{"source": "2403.14197v1.pdf", "page": 7}], "answerable": true}
+{"question": "Does the use of retrieval-augmentation lead to better performance for long-tail queries compared to large-scale LLMs?", "gold": [{"source": "2405.19893v1.pdf", "page": 6}], "answerable": true}
+{"question": "Does the research framework described in Figure 1 enable a controlled comparison of unsupervised, supervised, and retrieval-augmented generation methods for multi-hop question answering?", "gold": [{"source": "2601.07054v1.pdf", "page": 2}], "answerable": true}
+{"question": "What is the total number of query-doc pairs used for training across the four datasets?", "gold": [{"source": "2502.01113v3.pdf", "page": 17}], "answerable": true}
+{"question": "Can a framework like AgriIR, which is designed to be modular and adaptable to different domains, effectively address the challenges of applying large language models in low-resource settings?", "gold": [{"source": "2604.16353v1.pdf", "page": 2}], "answerable": true}
+{"question": "Does iterative retrieval improve query-based summarization performance across methods?", "gold": [{"source": "2502.11371v3.pdf", "page": 15}], "answerable": true}
+{"question": "What percentage of generated questions and answers were filtered out after applying a rating threshold of 8?", "gold": [{"source": "2501.11929v1.pdf", "page": 3}], "answerable": true}
+{"question": "Does the process of reshaping selected instance embeddings to create soft prompts involve stacking them in a specific order?", "gold": [{"source": "2406.03790v2.pdf", "page": 5}], "answerable": true}
+{"question": "Can a cooperative multi-agent reinforcement learning framework effectively address the challenge of precisely ranking top relevant documents?", "gold": [{"source": "2602.18734v2.pdf", "page": 2}], "answerable": true}
+{"question": "How many valid pairwise comparisons are made across 50 topics, excluding intra-configuration comparisons?", "gold": [{"source": "2504.07584v1.pdf", "page": 8}], "answerable": true}
+{"question": "What type of event or relation does the COMMERCE_SELL frame in FrameNet capture?", "gold": [{"source": "2406.16167v1.pdf", "page": 3}], "answerable": true}
+{"question": "Can a large language model be trained to distinguish the degree of relevance between documents in different modalities and query questions?", "gold": [{"source": "2512.17194v1.pdf", "page": 3}], "answerable": true}
+{"question": "Does monitoring in multi-hop QA tasks involve re-evaluating the correctness of cognitive processes when the complexity of the task or knowledge is insufficient?", "gold": [{"source": "2402.11626v1.pdf", "page": 3}], "answerable": true}
+{"question": "Does the proposed approach achieve statistically significant improvements in accuracy-based retrieval compared to state-of-the-art multilingual embedding models?", "gold": [{"source": "2604.20666v1.pdf", "page": 8}], "answerable": true}
+{"question": "Does the knowledge graph-based fine-tuning methodology used in ORPHEAS employ a domain-specific ontology to structure the knowledge graph?", "gold": [{"source": "2604.20666v1.pdf", "page": 4}], "answerable": true}
+{"question": "Does the FLAN model's use of denoising strategies during training improve its robustness to noisy contexts?", "gold": [{"source": "2403.09040v3.pdf", "page": 11}], "answerable": true}
+{"question": "Does the DeepSearch module use a sub-question decomposition approach to conduct its iterative search?", "gold": [{"source": "2509.21336v1.pdf", "page": 9}], "answerable": true}
+{"question": "What is the size of the expanded Vietnamese News Corpus dataset after the additional 10 million articles were incorporated?", "gold": [{"source": "2403.01616v2.pdf", "page": 2}], "answerable": true}
+{"question": "What is the accuracy rate for the Hindi language in the dataset \"chaii-1\"?", "gold": [{"source": "2501.11929v1.pdf", "page": 13}], "answerable": true}

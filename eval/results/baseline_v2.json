@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "recall@1": 0.61,
+    "recall@3": 0.78,
+    "recall@5": 0.878,
+    "recall@10": 0.951,
+    "mrr": 0.713,
+    "n_answerable": 41
+  },
+  "misses": [
+    "What is the weighted precision for the \"selector-agent-trim\" model on the \"ncsu-las\" task?",
+    "Does the proposed approach achieve statistically significant improvements in accuracy-based retrieval compared to state-of-the-art multilingual embedding models?"
+  ]
+}
