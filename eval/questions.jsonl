@@ -42,3 +42,9 @@
 {"question": "Does the DeepSearch module use a sub-question decomposition approach to conduct its iterative search?", "gold": [{"source": "2509.21336v1.pdf", "page": 9}], "answerable": true}
 {"question": "What is the size of the expanded Vietnamese News Corpus dataset after the additional 10 million articles were incorporated?", "gold": [{"source": "2403.01616v2.pdf", "page": 2}], "answerable": true}
 {"question": "What is the accuracy rate for the Hindi language in the dataset \"chaii-1\"?", "gold": [{"source": "2501.11929v1.pdf", "page": 13}], "answerable": true}
+{"question": "What is the capital of Japan?", "gold": [], "answerable": false}
+{"question": "Who is the current president of the United States?", "gold": [], "answerable": false}
+{"question": "What is the population of Malaysia?", "gold": [], "answerable": false}
+{"question": "How do I train a dog to sit?", "gold": [], "answerable": false}
+{"question": "What is the boiling point of water?", "gold": [], "answerable": false}
+{"question": "Which country is Paris in?", "gold": [], "answerable": false}

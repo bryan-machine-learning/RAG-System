@@ -1,11 +1,12 @@
 import argparse
 import json
+from re import search
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
-from retrieve import retrieve  # noqa: E402
+from retrieve import retrieve, retrieve_reranked
 
 KS = [1, 3, 5, 10]
 
@@ -16,6 +17,7 @@ def load(path):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--name", default="baseline")
+    ap.add_argument("--rerank", action="store_true", help="use reranking")
     ap.add_argument("--generate", action="store_true", help="also test answers (slow)")
     args = ap.parse_args()
 
@@ -28,7 +30,9 @@ def main():
     misses = []
     for q in answerable:
         gold = {(g["source"], g["page"]) for g in q["gold"]}
-        results = retrieve(q["question"], k=max(KS))
+        search = retrieve_reranked if args.rerank else retrieve
+        results = search(q["question"], k=max(KS))
+
         rank = next(
             (i for i, r in enumerate(results, 1) if (r["source"], r["page"]) in gold),
             None,
