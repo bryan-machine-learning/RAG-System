@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer
 import chromadb
+from sentence_transformers import CrossEncoder
 
 model = SentenceTransformer("BAAI/bge-small-en-v1.5")
 col = chromadb.PersistentClient(path="chroma_db").get_collection("docs")
@@ -14,13 +15,19 @@ def retrieve(question, k=5):
         for d, m, dist in zip(res["documents"][0], res["metadatas"][0], res["distances"][0])
     ]
 
-if __name__ == "__main__":
-    questions = [
-        "What is retrieval-augmented generation?",
-        "How do rerankers improve retrieval quality?",
-        "What are common failure modes of RAG systems?",
-    ]
-    for q in questions:
-        print(f"\n=== {q}")
-        for r in retrieve(q, k=3):
-            print(f"{r['source']} p.{r['page']} ({r['distance']:.3f})\n{r['text'][:200]}\n")
+
+_reranker = None
+
+def retrieve_reranked(question, k=5, candidates=20):
+    global _reranker
+    if _reranker is None:
+        _reranker = CrossEncoder("BAAI/bge-reranker-base")
+    cands = retrieve(question, k=candidates)
+    scores = _reranker.predict([(question, c["text"]) for c in cands])
+    ranked = sorted(zip(cands, scores), key=lambda x: x[1], reverse=True)
+    out = []
+    for c, s in ranked[:k]:
+        c = dict(c)
+        c["score"] = float(s)
+        out.append(c)
+    return out

@@ -1,6 +1,6 @@
 import os
 from openai import OpenAI
-from retrieve import retrieve
+from retrieve import retrieve, retrieve_reranked, retrieve_reranked
 
 BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:11434/v1")
 API_KEY = os.getenv("LLM_API_KEY", "ollama")
@@ -12,7 +12,8 @@ SYSTEM_PROMPT = """You answer questions using ONLY the numbered context passages
 Rules:
 - Cite the passages you used like [1] or [2][3] after each claim.
 - If the passages do not contain the answer, reply exactly: "I don't know based on the provided documents."
-- Do not use outside knowledge. Be concise."""
+- Do not use outside knowledge. Be concise.
+Only answer the exact question asked. If the passages merely contain similar-looking examples and don't address that question, refuse."""
 
 def build_context(chunks):
     return "\n\n".join(
@@ -20,8 +21,10 @@ def build_context(chunks):
         for i, c in enumerate(chunks, start=1)
     )
 
-def answer(question, k=5):
-    chunks = retrieve(question, k=k)
+def answer(question, k=5, rerank=False):
+    search = retrieve_reranked if rerank else retrieve
+    chunks = search(question, k=k)
+
     user_msg = f"Context:\n{build_context(chunks)}\n\nQuestion: {question}"
     resp = client.chat.completions.create(
         model=MODEL,
@@ -32,15 +35,3 @@ def answer(question, k=5):
         ],
     )
     return {"answer": resp.choices[0].message.content, "sources": chunks}
-
-if __name__ == "__main__":
-    questions = [
-        "How do rerankers improve retrieval quality?",
-        "What are common failure modes of RAG systems?",
-        "What is the capital of France?",   # should say "I don't know"
-    ]
-    for q in questions:
-        result = answer(q)
-        print(f"\n=== {q}\n{result['answer']}\n")
-        for i, s in enumerate(result["sources"], start=1):
-            print(f"  [{i}] {s['source']} p.{s['page']}")
