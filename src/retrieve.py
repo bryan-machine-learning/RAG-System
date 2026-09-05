@@ -15,5 +15,12 @@ def retrieve(question, k=5):
     ]
 
 if __name__ == "__main__":
-    for r in retrieve("What problem does this paper try to solve?"):
-        print(f"{r['source']} p.{r['page']} ({r['distance']:.3f})\n{r['text'][:200]}\n")
+    questions = [
+        "What is retrieval-augmented generation?",
+        "How do rerankers improve retrieval quality?",
+        "What are common failure modes of RAG systems?",
+    ]
+    for q in questions:
+        print(f"\n=== {q}")
+        for r in retrieve(q, k=3):
+            print(f"{r['source']} p.{r['page']} ({r['distance']:.3f})\n{r['text'][:200]}\n")

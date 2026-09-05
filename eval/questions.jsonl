@@ -1,0 +1,13 @@
+{"question": "Which models perform worse with retrieved context than with no context when noise is added?", "gold": [{"source": "2403.09040v3.pdf", "page": 6}], "answerable": true}
+{"question": "Why can't we guarantee that LLMs will use the useful information in retrieved documents?", "gold": [{"source": "2309.01431v2.pdf", "page": 3}], "answerable": true}
+{"question": "Which readers benefit from RAG at large k, and which ones degrade because of noise?", "gold": [{"source": "2403.09040v3.pdf", "page": 2}], "answerable": true}
+{"question": "How well do LLMs answer complex questions directly, and what accuracy figures are reported?", "gold": [{"source": "2309.01431v2.pdf", "page": 6}], "answerable": true}
+{"question": "What is hallucination in LLMs?", "gold": [{"source": "2504.08748v1.pdf", "page": 2}], "answerable": true}
+{"question": "What two new metrics does the RAGGED paper introduce?", "gold": [{"source": "2403.09040v3.pdf", "page": 1}], "answerable": true}
+{"question": "Who first proposed retrieval-augmented generation?", "gold": [{"source": "2501.11929v1.pdf", "page": 1}, {"source": "2601.16503v2.pdf", "page": 2}], "answerable": true}
+{"question": "How much does adding a reranker change F1 on NQ compared with vanilla RAG using Llama3.1-8B?", "gold": [{"source": "2502.11371v3.pdf", "page": 16}], "answerable": true}
+{"question": "Which pipeline configurations (baseline, GROBID, fine-tuning, semantic chunking) are compared in the fine-tuned model experiment?", "gold": [{"source": "2412.15404v1.pdf", "page": 18}], "answerable": true}
+{"question": "What problems of noisy input and item ambiguity does ReGeS address?", "gold": [{"source": "2509.21371v1.pdf", "page": 2}], "answerable": true}
+{"question": "What is the capital of France?", "gold": [], "answerable": false}
+{"question": "Who won the 2022 FIFA World Cup?", "gold": [], "answerable": false}
+{"question": "What is a good recipe for nasi lemak?", "gold": [], "answerable": false}

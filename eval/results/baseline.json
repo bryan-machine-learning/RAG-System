@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "recall@1": 0.3,
+    "recall@3": 0.5,
+    "recall@5": 0.7,
+    "recall@10": 0.8,
+    "mrr": 0.457,
+    "n_answerable": 10
+  },
+  "misses": [
+    "Who first proposed retrieval-augmented generation?",
+    "What problems of noisy input and item ambiguity does ReGeS address?"
+  ]
+}
