@@ -4,7 +4,19 @@ A question-answering system over ~40 arXiv papers about retrieval-augmented gene
 
 > **Headline result:** hybrid search (BM25 + embeddings) followed by a cross-encoder reranker raised **MRR from 0.724 to 0.900** and **recall@1 from 0.615 to 0.846** on my evaluation set, with no extra training. See [Results](#results) for the caveats.
 
-<!-- TODO: add a demo GIF of `python src/ask.py` here -->
+
+## Contents
+
+- [Why this project](#why-this-project)
+- [How it works](#how-it-works)
+- [Results](#results)
+- [What failed, and what I learned](#what-failed-and-what-i-learned)
+- [Quick start](#quick-start)
+- [Reproducing the evaluation](#reproducing-the-evaluation)
+- [Project structure](#project-structure)
+- [Evaluation method](#evaluation-method)
+- [Limitations](#limitations)
+- [Roadmap](#roadmap)
 
 ## Why this project
 
@@ -38,6 +50,7 @@ flowchart LR
 | Fusion | Reciprocal rank fusion (k=60) | Merges two rankings without tuning score scales |
 | Reranker | `BAAI/bge-reranker-base` cross-encoder | Rescoring 20 candidates is much more accurate than first-pass search |
 | Generator | `llama3.2:3b` through Ollama, using the OpenAI-compatible client | Free and local; swap models with environment variables |
+| Interfaces | Gradio demo page, FastAPI endpoint | A UI for people and a JSON API for programs |
 
 ## Results
 
@@ -81,9 +94,11 @@ On an earlier version of the question set (41 answerable, 9 unanswerable) with p
 
 **4. A reranker score threshold cannot reliably detect off-topic questions.** Off-topic questions like "capital of the United States" scored 0.96 and "capital of France" 0.995, as high as genuinely answerable questions, because the corpus contains QA-shaped examples. A threshold catches clearly unrelated questions (recipe: 0.00, World Cup: 0.29) but not these.
 
-**5. Naive junk filtering did not help.** I wrote heuristics to drop bibliography chunks, tiny fragments, and prompt templates (3,881 to 3,304 chunks). On the 41-question set at the time, recall@5 fell from 0.878 to 0.829. Inspecting the misses showed one affected question was itself drawn from a reference list (a flawed question), and another was likely noise from approximate nearest-neighbor search. I revised the heuristics but did not find a clear gain, so filtering is **off by default** (`USE_FILTERS=1` to enable). Note that the revised filter was not benchmarked separately.
+**5. Naive junk filtering did not help.** I wrote heuristics to drop bibliography chunks, tiny fragments, and prompt templates (3,881 to 3,304 chunks). On the 41-question set at the time, recall@5 fell from 0.878 to 0.829. Inspecting the misses showed one affected question was itself drawn from a reference list (a flawed question), and another was likely noise from approximate nearest-neighbor search. I revised the heuristics but did not find a clear gain, so filtering is **off by default** (`USE_FILTERS=1` to enable). The revised filter was not benchmarked separately.
 
 **6. A 3B local model is conservative.** It refuses on a meaningful share of answerable questions and follows strict instructions imperfectly. Comparing it with a larger hosted model is on the roadmap.
+
+**7. Writing tests exposed a quirk in my own chunker.** The final chunk of a page can be fully contained in the one before it, which adds a redundant tail chunk to the index. It is harmless for correctness, but sentence-aware splitting would remove it.
 
 ## Quick start
 
@@ -103,14 +118,56 @@ python src/download_corpus.py
 # 2. Chunk, embed, and index
 python src/ingest.py
 
-# 3. Ask questions (hybrid search + reranker + local LLM)
+# 3. Start the local model
 ollama pull llama3.2:3b
-python src/ask.py
 ```
 
 All scripts anchor their paths to the project root, so they work from any directory. The PDFs and the vector index are gitignored and rebuilt by the commands above.
 
-**Using a hosted model instead of Ollama:** set `LLM_BASE_URL`, `LLM_API_KEY`, and `LLM_MODEL` in your environment. No code changes needed.
+### Ask questions
+
+```bash
+python src/ask.py        # interactive terminal loop
+python src/app.py        # Gradio web page (default: http://127.0.0.1:7860)
+```
+
+Both use hybrid search, the reranker, and the local LLM. The first question is slow while the models load.
+
+### Run the API
+
+```bash
+uvicorn --app-dir src api:app --reload
+```
+
+- `GET /health` returns `{"status": "ok"}`
+- `POST /ask` with `{"question": "...", "k": 5}` returns `{"answer": "...", "sources": [{"source": "...", "page": 1}]}`
+- Interactive docs are at `http://127.0.0.1:8000/docs`
+
+### Run the API with Docker
+
+The Dockerfile packages the API. It still needs **Ollama running on the host** and a **prebuilt index** (`python src/ingest.py`), which are mounted or reached from the container rather than baked in.
+
+```bash
+docker build -t rag-arxiv .
+docker run --rm -p 8000:8000 \
+  -v "$(pwd)/chroma_db:/app/chroma_db" \
+  -v hf_cache:/root/.cache/huggingface \
+  rag-arxiv
+```
+
+On Windows Command Prompt, use `"%cd%\chroma_db:/app/chroma_db"` for the first volume and put the command on one line. The container reaches Ollama at `host.docker.internal:11434`. On Linux you may need to add `--add-host=host.docker.internal:host-gateway`. The first request downloads the embedding and reranker models into the `hf_cache` volume.
+
+### Use a hosted model instead of Ollama
+
+Set `LLM_BASE_URL`, `LLM_API_KEY`, and `LLM_MODEL` in your environment. No code changes are needed.
+
+### Run the tests
+
+```bash
+pytest -v
+```
+
+The tests cover chunking, the optional filters, and the API's `/health` endpoint and request validation. The API tests are skipped automatically if the index has not been built. They do not call the LLM.
 
 ## Reproducing the evaluation
 
@@ -124,7 +181,7 @@ python eval/run_eval.py --name hybrid_rerank --hybrid --rerank
 python eval/run_eval.py --name gen --hybrid --rerank --generate --limit 10
 ```
 
-Results are saved to `eval/results/<name>.json`, including the list of missed questions.
+Results are saved to `eval/results/<name>.json`, including the list of missed questions. Retrieval-only runs do not need Ollama.
 
 ## Project structure
 
@@ -134,13 +191,17 @@ Results are saved to `eval/results/<name>.json`, including the list of missed qu
 │   ├── ingest.py            # parse, chunk, embed, index (optional filters)
 │   ├── retrieve.py          # dense, hybrid, and reranked retrieval
 │   ├── generate.py          # grounded answers with citations
-│   └── ask.py               # interactive question loop
+│   ├── ask.py               # interactive terminal loop
+│   ├── app.py               # Gradio demo page
+│   └── api.py               # FastAPI service (/ask, /health)
 ├── eval/
 │   ├── questions.jsonl      # evaluation questions with gold paper and page
 │   ├── run_eval.py          # recall@k, MRR, refusal rates
 │   ├── make_questions.py    # drafts questions from random chunks (needs manual review)
 │   ├── check_questions.py   # validates the JSONL file
 │   └── results/             # saved experiment outputs
+├── tests/                   # pytest tests (chunking, filters, API)
+├── Dockerfile               # packages the API
 ├── data/raw/                # downloaded PDFs (gitignored)
 ├── chroma_db/               # vector index (gitignored)
 └── requirements.txt
@@ -161,17 +222,23 @@ Results are saved to `eval/results/<name>.json`, including the list of missed qu
 - No answer-quality or faithfulness metric beyond refusal rates yet.
 - Text-only PDF parsing: tables and two-column layouts can come out garbled.
 - Local CPU inference is slow, especially for generation with the reranker.
+- The Docker image is not self-contained: it needs Ollama on the host and a prebuilt index.
 - The corpus is not redistributed. Run the download script to rebuild it.
 
 ## Roadmap
 
+- [x] Hybrid retrieval, reranking, and a measured evaluation set
+- [x] Gradio demo page
+- [x] FastAPI service
+- [x] Unit and API tests
+- [x] Dockerfile for the API
 - [ ] Held-out set of hand-written questions, scored once with the final setup
 - [ ] Answer-quality evaluation (faithfulness and correctness, with manual spot checks)
 - [ ] Compare the 3B local model against a larger hosted model
 - [ ] Chunking experiments (size, overlap, sentence-aware splitting)
-- [ ] FastAPI backend and a Streamlit or Gradio front end
-- [ ] Dockerfile, tests, and CI
+- [ ] CI to run tests on every push
+- [ ] Hosted deployment with a live demo link
 
 ## Tech stack
 
-Python, ChromaDB, sentence-transformers (`bge-small-en-v1.5`, `bge-reranker-base`), rank-bm25, pypdf, Ollama, the OpenAI Python client (as a generic chat client).
+Python, ChromaDB, sentence-transformers (`bge-small-en-v1.5`, `bge-reranker-base`), rank-bm25, pypdf, Ollama, the OpenAI Python client (as a generic chat client), Gradio, FastAPI, pytest, Docker.
