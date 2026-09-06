@@ -1,6 +1,6 @@
 import os
 from openai import OpenAI
-from retrieve import retrieve, retrieve_reranked, retrieve_reranked
+from retrieve import retrieve, retrieve_hybrid, retrieve_reranked, retrieve_reranked
 
 BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:11434/v1")
 API_KEY = os.getenv("LLM_API_KEY", "ollama")
@@ -21,9 +21,13 @@ def build_context(chunks):
         for i, c in enumerate(chunks, start=1)
     )
 
-def answer(question, k=5, rerank=False):
-    search = retrieve_reranked if rerank else retrieve
-    chunks = search(question, k=k)
+def answer(question, k=5, rerank=False, hybrid=False):
+    if rerank:
+        chunks = retrieve_reranked(question, k=k, hybrid=hybrid)
+    elif hybrid:
+        chunks = retrieve_hybrid(question, k=k)
+    else:
+        chunks = retrieve(question, k=k)
 
     user_msg = f"Context:\n{build_context(chunks)}\n\nQuestion: {question}"
     resp = client.chat.completions.create(
