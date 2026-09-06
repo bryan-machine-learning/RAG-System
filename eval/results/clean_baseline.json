@@ -1,0 +1,13 @@
+{
+  "summary": {
+    "recall@1": 0.615,
+    "recall@3": 0.795,
+    "recall@5": 0.897,
+    "recall@10": 0.974,
+    "mrr": 0.724,
+    "n_answerable": 39
+  },
+  "misses": [
+    "What is the weighted precision for the \"selector-agent-trim\" model on the \"ncsu-las\" task?"
+  ]
+}

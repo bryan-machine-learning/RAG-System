@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "recall@1": 0.821,
+    "recall@3": 0.949,
+    "recall@5": 0.949,
+    "recall@10": 0.949,
+    "mrr": 0.876,
+    "n_answerable": 39
+  },
+  "misses": [
+    "What two new metrics does the RAGGED paper introduce?",
+    "What is the weighted precision for the \"selector-agent-trim\" model on the \"ncsu-las\" task?"
+  ]
+}

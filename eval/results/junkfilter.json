@@ -1,0 +1,16 @@
+{
+  "summary": {
+    "recall@1": 0.561,
+    "recall@3": 0.732,
+    "recall@5": 0.829,
+    "recall@10": 0.902,
+    "mrr": 0.666,
+    "n_answerable": 41
+  },
+  "misses": [
+    "What approach is used to handle unbalanced data distributions in information extraction?",
+    "What is the weighted precision for the \"selector-agent-trim\" model on the \"ncsu-las\" task?",
+    "Does the proposed approach achieve statistically significant improvements in accuracy-based retrieval compared to state-of-the-art multilingual embedding models?",
+    "Does the DeepSearch module use a sub-question decomposition approach to conduct its iterative search?"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "summary": {
+    "recall@1": 0.756,
+    "recall@3": 0.878,
+    "recall@5": 0.878,
+    "recall@10": 0.878,
+    "mrr": 0.809,
+    "n_answerable": 41
+  },
+  "misses": [
+    "What two new metrics does the RAGGED paper introduce?",
+    "What approach is used to handle unbalanced data distributions in information extraction?",
+    "What is the weighted precision for the \"selector-agent-trim\" model on the \"ncsu-las\" task?",
+    "Does the proposed approach achieve statistically significant improvements in accuracy-based retrieval compared to state-of-the-art multilingual embedding models?",
+    "Does the DeepSearch module use a sub-question decomposition approach to conduct its iterative search?"
+  ]
+}

@@ -16,7 +16,6 @@
 {"question": "Does the MultiHopAgent's retrieval process involve generating new queries based on search results?", "gold": [{"source": "2509.21336v1.pdf", "page": 7}], "answerable": true}
 {"question": "What are the average performance scores for the Community-GraphRAG (Local) and Community-GraphRAG (Global) models?", "gold": [{"source": "2502.11371v3.pdf", "page": 8}], "answerable": true}
 {"question": "Does SYNCHECK improve the faithfulness of RALMs in long-form generation?", "gold": [{"source": "2406.13692v2.pdf", "page": 9}], "answerable": true}
-{"question": "What approach is used to handle unbalanced data distributions in information extraction?", "gold": [{"source": "2406.03790v2.pdf", "page": 12}], "answerable": true}
 {"question": "Does the DSRAG framework improve response accuracy in domain-specific tasks compared to traditional baselines?", "gold": [{"source": "2509.10467v1.pdf", "page": 11}], "answerable": true}
 {"question": "What is the weighted precision for the \"selector-agent-trim\" model on the \"ncsu-las\" task?", "gold": [{"source": "2603.09891v1.pdf", "page": 18}], "answerable": true}
 {"question": "Does the expert model serve as a benchmark for evaluating the consistency and correctness of answers in the system?", "gold": [{"source": "2402.11626v1.pdf", "page": 10}], "answerable": true}
@@ -36,7 +35,6 @@
 {"question": "What type of event or relation does the COMMERCE_SELL frame in FrameNet capture?", "gold": [{"source": "2406.16167v1.pdf", "page": 3}], "answerable": true}
 {"question": "Can a large language model be trained to distinguish the degree of relevance between documents in different modalities and query questions?", "gold": [{"source": "2512.17194v1.pdf", "page": 3}], "answerable": true}
 {"question": "Does monitoring in multi-hop QA tasks involve re-evaluating the correctness of cognitive processes when the complexity of the task or knowledge is insufficient?", "gold": [{"source": "2402.11626v1.pdf", "page": 3}], "answerable": true}
-{"question": "Does the proposed approach achieve statistically significant improvements in accuracy-based retrieval compared to state-of-the-art multilingual embedding models?", "gold": [{"source": "2604.20666v1.pdf", "page": 8}], "answerable": true}
 {"question": "Does the knowledge graph-based fine-tuning methodology used in ORPHEAS employ a domain-specific ontology to structure the knowledge graph?", "gold": [{"source": "2604.20666v1.pdf", "page": 4}], "answerable": true}
 {"question": "Does the FLAN model's use of denoising strategies during training improve its robustness to noisy contexts?", "gold": [{"source": "2403.09040v3.pdf", "page": 11}], "answerable": true}
 {"question": "Does the DeepSearch module use a sub-question decomposition approach to conduct its iterative search?", "gold": [{"source": "2509.21336v1.pdf", "page": 9}], "answerable": true}
