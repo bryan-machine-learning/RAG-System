@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
-from retrieve import retrieve, retrieve_reranked
+from retrieve import retrieve, retrieve_reranked, retrieve_hybrid
 
 KS = [1, 3, 5, 10]
 
@@ -18,6 +18,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--name", default="baseline")
     ap.add_argument("--rerank", action="store_true", help="use reranking")
+    ap.add_argument("--hybrid", action="store_true", help="use hybrid retrieval")
     ap.add_argument("--generate", action="store_true", help="also test answers (slow)")
     args = ap.parse_args()
 
@@ -30,7 +31,14 @@ def main():
     misses = []
     for q in answerable:
         gold = {(g["source"], g["page"]) for g in q["gold"]}
-        search = retrieve_reranked if args.rerank else retrieve
+        
+        if args.rerank:
+            search = lambda q, k: retrieve_reranked(q, k=k, hybrid=args.hybrid)
+        elif args.hybrid:
+            search = retrieve_hybrid
+        else:
+            search = retrieve
+            
         results = search(q["question"], k=max(KS))
 
         rank = next(

@@ -1,0 +1,14 @@
+{
+  "summary": {
+    "recall@1": 0.692,
+    "recall@3": 0.897,
+    "recall@5": 0.923,
+    "recall@10": 0.949,
+    "mrr": 0.796,
+    "n_answerable": 39
+  },
+  "misses": [
+    "What are the average performance scores for the Community-GraphRAG (Local) and Community-GraphRAG (Global) models?",
+    "What is the weighted precision for the \"selector-agent-trim\" model on the \"ncsu-las\" task?"
+  ]
+}

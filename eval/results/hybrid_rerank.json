@@ -1,0 +1,11 @@
+{
+  "summary": {
+    "recall@1": 0.846,
+    "recall@3": 0.949,
+    "recall@5": 1.0,
+    "recall@10": 1.0,
+    "mrr": 0.9,
+    "n_answerable": 39
+  },
+  "misses": []
+}
