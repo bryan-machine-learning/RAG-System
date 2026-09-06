@@ -1,0 +1,7 @@
+.venv/
+.git/
+data/
+chroma_db/
+__pycache__/
+tests/
+eval/results/
