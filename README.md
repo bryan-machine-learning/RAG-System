@@ -105,8 +105,8 @@ On an earlier version of the question set (41 answerable, 9 unanswerable) with p
 Requires Python 3.10+ and [Ollama](https://ollama.com) for answer generation. Retrieval and evaluation work without it.
 
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/bryan-machine-learning/RAG-System.git
+
 
 python -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
